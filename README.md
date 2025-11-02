@@ -8,7 +8,7 @@ eIM is a GPU-accelerated algorithm for finding the most influential nodes in a s
 To compile the project, use the following command:
 
 ```sh
-nvcc -O3 ./*.cu -o eIM
+nvcc -O3 ./*.cu ./*.cpp -o eIM
 ```
 
 ## Usage
