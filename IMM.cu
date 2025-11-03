@@ -131,7 +131,6 @@ void IMM::init(const int k, const int model, const double epsilon)
     // Calculate rr_set_limit
     double free_memory_double = static_cast<double>(free_memory) * 0.9;
     rr_set_limit = (free_memory_double * 8.0) / static_cast<double>(bits_per_vertex);
-    std::cout << "RR set limit: " << rr_set_limit << std::endl;
     
     // Init d_rr_sets
     d_rr_sets = thrust::device_vector<uint32_t>(rr_sets_size, 0);
