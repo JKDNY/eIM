@@ -68,7 +68,6 @@ class IMM
         thrust::device_vector<uint32_t> d_offsets;
 
         thrust::device_vector<uint32_t> d_rr_sets;
-        size_t rr_sets_size;
 
         thrust::device_vector<uint64_t> d_rr_offsets;
         thrust::device_vector<int> d_freq_counts;

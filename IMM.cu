@@ -131,7 +131,8 @@ void IMM::init(const int k, const int model, const double epsilon)
     // Calculate rr_set_limit
     double free_memory_double = static_cast<double>(free_memory) * 0.9;
     rr_set_limit = (free_memory_double * 8.0) / static_cast<double>(bits_per_vertex);
-
+    std::cout << "RR set limit: " << rr_set_limit << std::endl;
+    
     // Init d_rr_sets
     d_rr_sets = thrust::device_vector<uint32_t>(rr_sets_size, 0);
     CheckCuda(__LINE__);
@@ -169,7 +170,7 @@ void IMM::generate_rr_sets(uint32_t theta)
             d_n_rr_sets,
             d_max_rr_set_offset,
             thrust::raw_pointer_cast(d_rr_offsets.data()),
-            rr_sets_size,
+            rr_set_limit,
             d_error_flag,
             d_global_queue,
             q_capacity
@@ -187,7 +188,7 @@ void IMM::generate_rr_sets(uint32_t theta)
             d_n_rr_sets,
             d_max_rr_set_offset,
             thrust::raw_pointer_cast(d_rr_offsets.data()),
-            rr_sets_size,
+            rr_set_limit,
             d_error_flag,
             d_global_queue,
             q_capacity
