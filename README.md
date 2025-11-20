@@ -3,7 +3,7 @@
 
 eIM is a GPU-accelerated algorithm for finding the most influential nodes in a social network. This implementation is based on the Influence Maximization via Martigales (IMM) algorithm. For more information please read the 
 
-### Publication
+## Publication
 J. Doney, X. Huang, and C.-H. Lee, “eIM: GPU-Accelerated Efficient Influence Maximization in Large-Scale Social Networks,” Proceedings of the SC ’25 Workshops of the International Conference for High Performance Computing, Networking, Storage and Analysis, pp. 757–765, Nov. 2025, doi: 10.1145/3731599.3767442.
 
 ## Compilation
