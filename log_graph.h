@@ -26,7 +26,7 @@ class Log_Graph
 
         void create_logGraph(const char* filename, const bool weighted,
                              const bool reverse);
-
+		int16_t float_to_fixed(float value, int frac_bits, bool round, bool saturate);
     public:
         Log_Graph();
         ~Log_Graph();

@@ -9,7 +9,7 @@ constexpr uint64_t SPLITMIX_CONST1 = 0x9e3779b97f4a7c15ULL;
 constexpr uint64_t SPLITMIX_CONST2 = 0xbf58476d1ce4e5b9ULL;
 constexpr uint64_t SPLITMIX_CONST3 = 0x94d049bb133111ebULL;
 constexpr float FLOAT_CONV_FACTOR = 1.0f / 9007199254740992.0f;
-constexpr int EDGE_FRAC_BITS = 6;
+constexpr int EDGE_FRAC_BITS = 14;
 constexpr float EDGE_SCALE_INV = 1.0f / (1 << EDGE_FRAC_BITS);
 
 // Split-mix initialization function for xoshiro256** state

@@ -56,12 +56,12 @@ void Log_Graph::print_destinations(){
     printf("\n");
 }
 
-int8_t float_to_fixed(float value, int frac_bits, bool round = true, bool saturate = true) {
+int16_t Log_Graph::float_to_fixed(float value, int frac_bits, bool round = true, bool saturate = true) {
 	if (std::isnan(value)) return 0;
-	if (std::isinf(value)) return (value > 0) ? std::numeric_limits<int8_t>::max() : std::numeric_limits<int8_t>::min();
+	if (std::isinf(value)) return (value > 0) ? std::numeric_limits<int16_t>::max() : std::numeric_limits<int16_t>::min();
 
 	if (frac_bits < 0) frac_bits = 0;
-	if (frac_bits > 6) frac_bits = 6; // leave sign bit and some headroom for integer part
+	if (frac_bits > 14) frac_bits = 14; // leave sign bit and some headroom
 
 	const long double scale = ldexp(1.0L, frac_bits); // 2^frac_bits
 	long double scaled = static_cast<long double>(value) * scale;
@@ -70,10 +70,10 @@ int8_t float_to_fixed(float value, int frac_bits, bool round = true, bool satura
 
 	// clamp to int8_t range if requested
 	if (saturate) {
-		const long double maxv = static_cast<long double>(std::numeric_limits<int8_t>::max());
-		const long double minv = static_cast<long double>(std::numeric_limits<int8_t>::min());
-		if (rounded > maxv) return std::numeric_limits<int8_t>::max();
-		if (rounded < minv) return std::numeric_limits<int8_t>::min();
+		const long double maxv = static_cast<long double>(std::numeric_limits<int16_t>::max());
+		const long double minv = static_cast<long double>(std::numeric_limits<int16_t>::min());
+		if (rounded > maxv) return std::numeric_limits<int16_t>::max();
+		if (rounded < minv) return std::numeric_limits<int16_t>::min();
 	}
 
 	return static_cast<int8_t>(rounded);
@@ -136,7 +136,7 @@ void Log_Graph::create_logGraph(const char* filename, const bool weighted,
     edge_count = offsets.back();
 
     bits_per_vertex = std::ceil(std::log2(max_element));
-    bits_per_weight = 8;
+    bits_per_weight = 16;
     bits_per_offset = std::ceil(std::log2(edge_count));
 
     BitVector compressed_dests(destinations.size() * bits_per_vertex);
@@ -146,7 +146,7 @@ void Log_Graph::create_logGraph(const char* filename, const bool weighted,
     for(size_t i = 0; i < destinations.size(); ++i){
         compressed_dests.set(i, destinations[i], bits_per_vertex);
         float w = weights[i];
-        int8_t weight_bits = float_to_fixed(w, 6, true, true);
+        int8_t weight_bits = float_to_fixed(w, 14, true, true);
         compressed_weights.set(i, weight_bits, bits_per_weight);
     }
 
